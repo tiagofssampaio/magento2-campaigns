@@ -6,9 +6,9 @@ namespace TiagoSampaio\Campaigns\Ui\Component\Listing\Column;
 class CampaignActions extends \Magento\Ui\Component\Listing\Columns\Column
 {
 
-    const URL_PATH_DELETE = 'tiagosampaio_campaigns/campaign/delete';
-    const URL_PATH_EDIT = 'tiagosampaio_campaigns/campaign/edit';
-    const URL_PATH_DETAILS = 'tiagosampaio_campaigns/campaign/details';
+    const URL_PATH_DELETE = 'tiagosampaio/campaign/delete';
+    const URL_PATH_EDIT = 'tiagosampaio/campaign/edit';
+    const URL_PATH_DETAILS = 'tiagosampaio/campaign/details';
     protected $urlBuilder;
 
     /**
@@ -67,7 +67,7 @@ class CampaignActions extends \Magento\Ui\Component\Listing\Columns\Column
                 }
             }
         }
-        
+
         return $dataSource;
     }
 }

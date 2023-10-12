@@ -3,7 +3,7 @@
 	<acl>
 		<resources>
 			<resource id="Magento_Backend::admin">
-				<resource id="TiagoSampaio_Campaigns::Campaign" title="Campaign" sortOrder="10">
+				<resource id="TiagoSampaio_Campaigns::Campaign" title="Campaigns" sortOrder="10">
 					<resource id="TiagoSampaio_Campaigns::Campaign_save" title="Save Campaign" sortOrder="10"/>
 					<resource id="TiagoSampaio_Campaigns::Campaign_delete" title="Delete Campaign" sortOrder="20"/>
 					<resource id="TiagoSampaio_Campaigns::Campaign_update" title="Update Campaign" sortOrder="30"/>

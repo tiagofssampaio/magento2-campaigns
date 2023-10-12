@@ -8,6 +8,7 @@
 		<column name="is_active" nullable="true" xsi:type="smallint" comment="Is Campaign Active" identity="false"/>
 		<column name="title" nullable="true" xsi:type="varchar" comment="Campaign Title" length="255"/>
 		<column name="description" nullable="true" xsi:type="text" comment="Campaign Description"/>
+		<column name="url_key" nullable="false" xsi:type="text" comment="Campaign URL Key"/>
 	</table>
 	<table name="tiagosampaio_campaign_item" resource="default" engine="innodb" comment="Campaign Campaign Table">
 		<column xsi:type="int" name="item_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>

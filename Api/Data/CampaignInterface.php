@@ -10,6 +10,7 @@ interface CampaignInterface
     const DESCRIPTION = 'description';
     const IS_ACTIVE = 'is_active';
     const TITLE = 'title';
+    const URL_KEY = 'url_key';
 
     /**
      * Get campaign_id
@@ -62,5 +63,19 @@ interface CampaignInterface
      * @return \TiagoSampaio\Campaigns\Campaign\Api\Data\CampaignInterface
      */
     public function setDescription($description);
+
+    /**
+     * Get url_key
+     * @return string|null
+     */
+    public function getUrlKey();
+
+    /**
+     * Set url_key
+     * @param string $urlKey
+     * @return \TiagoSampaio\Campaigns\Campaign\Api\Data\CampaignInterface
+     */
+    public function setUrlKey($urlKey);
+
 }
 

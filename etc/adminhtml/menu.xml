@@ -1,7 +1,19 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
 	<menu>
-		<add id="TiagoSampaio::top_level" title="TiagoSampaio" module="TiagoSampaio_Campaigns" sortOrder="50" resource="Magento_Backend::content"/>
-		<add id="TiagoSampaio_Campaigns::tiagosampaio_campaign" title="Campaign" module="TiagoSampaio_Campaigns" sortOrder="9999" resource="Magento_Backend::content" parent="TiagoSampaio::top_level" action="tiagosampaio_campaigns/campaign/index"/>
+		<add id="TiagoSampaio::top_level"
+             title="TiagoSampaio"
+             module="TiagoSampaio_Campaigns"
+             sortOrder="50"
+             resource="Magento_Backend::content"
+        />
+		<add id="TiagoSampaio_Campaigns::tiagosampaio_campaign"
+             title="Campaigns"
+             module="TiagoSampaio_Campaigns"
+             sortOrder="9999"
+             resource="Magento_Backend::content"
+             parent="TiagoSampaio::top_level"
+             action="tiagosampaio/campaign/index"
+        />
 	</menu>
 </config>

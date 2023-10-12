@@ -12,7 +12,7 @@
 	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
 		<arguments>
 			<argument name="collections" xsi:type="array">
-				<item name="tiagosampaio_campaigns_campaign_listing_data_source" xsi:type="string">TiagoSampaio\Campaigns\Model\ResourceModel\Campaign\Grid\Collection</item>
+				<item name="tiagosampaio_campaign_listing_data_source" xsi:type="string">TiagoSampaio\Campaigns\Model\ResourceModel\Campaign\Grid\Collection</item>
 			</argument>
 		</arguments>
 	</type>

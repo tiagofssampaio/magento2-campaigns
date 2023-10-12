@@ -80,5 +80,22 @@ class Campaign extends AbstractModel implements CampaignInterface
     {
         return $this->setData(self::DESCRIPTION, $description);
     }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getUrlKey()
+    {
+        return $this->getData(self::URL_KEY);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setUrlKey($urlKey)
+    {
+        return $this->setData(self::URL_KEY, $urlKey);
+    }
 }
 
