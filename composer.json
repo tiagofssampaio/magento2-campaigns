@@ -1,0 +1,22 @@
+{
+    "name": "tiagosampaio/module-campaigns",
+    "description": "Create and manage campaigns for your Magento 2 store.",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Tiago Sampaio",
+            "email": "tiagofssampaio@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "TiagoSampaio\\Campaigns\\": ""
+        }
+    }
+}

@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">tiagosampaio_campaigns_campaign_form.campaign_form_data_source</item>
+		</item>
+		<item name="label" xsi:type="string" translate="true">General Information</item>
+		<item name="template" xsi:type="string">templates/form/collapsible</item>
+	</argument>
+	<settings>
+		<buttons>
+			<button name="back" class="TiagoSampaio\Campaigns\Block\Adminhtml\Campaign\Edit\BackButton"/>
+			<button name="delete" class="TiagoSampaio\Campaigns\Block\Adminhtml\Campaign\Edit\DeleteButton"/>
+			<button name="save" class="TiagoSampaio\Campaigns\Block\Adminhtml\Campaign\Edit\SaveButton"/>
+			<button name="save_and_continue" class="TiagoSampaio\Campaigns\Block\Adminhtml\Campaign\Edit\SaveAndContinueButton"/>
+		</buttons>
+		<namespace>tiagosampaio_campaigns_campaign_form</namespace>
+		<dataScope>data</dataScope>
+		<deps>
+			<dep>tiagosampaio_campaigns_campaign_form.campaign_form_data_source</dep>
+		</deps>
+	</settings>
+	<dataSource name="campaign_form_data_source">
+		<argument name="data" xsi:type="array">
+			<item name="js_config" xsi:type="array">
+				<item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+			</item>
+		</argument>
+		<settings>
+			<submitUrl path="*/*/save"/>
+		</settings>
+		<dataProvider name="campaign_form_data_source" class="TiagoSampaio\Campaigns\Model\Campaign\DataProvider">
+			<settings>
+				<requestFieldName>campaign_id</requestFieldName>
+				<primaryFieldName>campaign_id</primaryFieldName>
+			</settings>
+		</dataProvider>
+	</dataSource>
+	<fieldset name="general">
+		<settings>
+			<label>General</label>
+		</settings>
+		<field name="is_active" formElement="input" sortOrder="10">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Campaign</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">is_active</label>
+				<dataScope>is_active</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="title" formElement="input" sortOrder="20">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Campaign</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">title</label>
+				<dataScope>title</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="description" formElement="textarea" sortOrder="30">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Campaign</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">description</label>
+				<dataScope>description</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+	</fieldset>
+</form>
