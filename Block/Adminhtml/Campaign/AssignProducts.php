@@ -75,14 +75,12 @@ class AssignProducts extends \Magento\Backend\Block\Template
     /**
      * @return string
      */
-    public function getProductsJson()
+    public function getProducts()
     {
-        // TODO: Implement getProductsJson() method.
-        $products = $this->getCampaign()->getProductsPosition();
-        if (!empty($products)) {
-            return $this->jsonEncoder->encode($products);
-        }
-        return '{}';
+        // TODO: get products from campaign
+        $products = [1, 2, 3, 4, 5, 9];
+        // This hack is needed because the array I need only has the product IDs arrays are weird in JavaScript
+        return implode(',', $products);
     }
 
     /**

@@ -41,9 +41,9 @@ class Save extends \Magento\Backend\App\Action
                 return $resultRedirect->setPath('*/*/');
             }
 
-            $products = json_decode($data['campaign_products'], true);
+            $campaignProducts = explode(',', $data['campaign_products']);
 
-            var_dump($products);die;
+            var_dump($campaignProducts);die;
 
             $model->setData($data);
 

@@ -228,6 +228,7 @@ class Product extends Extended
     {
         $products = $this->getRequest()->getPost('selected_products');
         if ($products === null) {
+            // TODO: get products from campaign
             $products = [1,2,3,4,5,9];
             return $products;
         }

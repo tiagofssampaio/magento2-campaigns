@@ -4,14 +4,14 @@ define([
     'use strict';
 
     return function (config) {
-        var selectedProducts = config.selectedProducts,
-            campaignProducts = $H(selectedProducts),
+        var campaignProducts = config.selectedProducts.split(','),
             gridJsObject = window[config.gridJsObjectName];
 
         /**
          * Show selected product when edit form in associated product grid
          */
-        $('in_campaign_products').value = Object.toJSON(campaignProducts);
+        $('in_campaign_products').value = campaignProducts.join(',');
+
         /**
          * Register Campaign Product
          *
@@ -20,18 +20,17 @@ define([
          * @param {Boolean} checked
          */
         function registerCampaignProduct(grid, element, checked) {
+            element.value = Number(element.value);
 
             if (checked) {
-                campaignProducts.set(element.value, element.value);
+                campaignProducts.push(element.value);
             } else {
-                campaignProducts.unset(element.value);
+                campaignProducts.splice(campaignProducts.indexOf(element.value), 1);
             }
 
-           // console.log('campaignProducts 111', campaignProducts.keys())
-
-            $('in_campaign_products').value = Object.toJSON(campaignProducts);
+            $('in_campaign_products').value = campaignProducts.join(',');
             grid.reloadParams = {
-                'selected_products[]': campaignProducts.keys()
+                'selected_products[]': campaignProducts
             };
         }
 
@@ -57,32 +56,7 @@ define([
             }
         }
 
-        /**
-         * Initialize campaign product row
-         *
-         * @param {Object} grid
-         * @param {String} row
-         */
-        function campaignProductRowInit(grid, row) {
-            var checkbox = $(row).getElementsByClassName('checkbox')[0];
-
-            if (checkbox) {
-                campaignProducts.set(checkbox.value, checkbox.value);
-            } else {
-                campaignProducts.unset(checkbox.value);
-            }
-
-            console.log('campaignProducts 222', campaignProducts.keys())
-        }
-
         gridJsObject.rowClickCallback = campaignProductRowClick;
-        gridJsObject.initRowCallback = campaignProductRowInit;
         gridJsObject.checkboxCheckCallback = registerCampaignProduct;
-
-        if (gridJsObject.rows) {
-            gridJsObject.rows.each(function (row) {
-                campaignProductRowInit(gridJsObject, row);
-            });
-        }
     };
 });

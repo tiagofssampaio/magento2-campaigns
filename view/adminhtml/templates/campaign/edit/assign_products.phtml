@@ -13,7 +13,7 @@ $gridJsObjectName = $blockGrid->getJsObjectName();
     {
         "*": {
             "TiagoSampaio_Campaigns/js/campaign/assign-products": {
-                "selectedProducts": <?= /* @noEscape */ $block->getProductsJson() ?>,
+                "selectedProducts": "<?= /* @noEscape */ $block->getProducts() ?>",
                 "gridJsObjectName": <?= /* @noEscape */ '"' . $gridJsObjectName . '"' ?: '{}' ?>
             }
         }
