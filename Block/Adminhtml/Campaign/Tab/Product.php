@@ -2,24 +2,32 @@
 
 namespace TiagoSampaio\Campaigns\Block\Adminhtml\Campaign\Tab;
 
+use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Block\Widget\Grid;
 use Magento\Backend\Block\Widget\Grid\Column;
 use Magento\Backend\Block\Widget\Grid\Extended;
+use Magento\Backend\Helper\Data;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Catalog\Model\Product\Visibility;
+use Magento\Catalog\Model\ProductFactory;
+use Magento\Directory\Model\Currency;
 use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Registry;
+use Magento\Store\Model\ScopeInterface;
+use TiagoSampaio\Campaigns\Model\CampaignRepository;
 
-class Product extends \Magento\Backend\Block\Widget\Grid\Extended
+class Product extends Extended
 {
     /**
      * Core registry
      *
-     * @var \Magento\Framework\Registry
+     * @var Registry
      */
     protected $_coreRegistry = null;
 
     /**
-     * @var \Magento\Catalog\Model\ProductFactory
+     * @var ProductFactory
      */
     protected $_productFactory;
 
@@ -34,19 +42,25 @@ class Product extends \Magento\Backend\Block\Widget\Grid\Extended
     private $visibility;
 
     /**
-     * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Backend\Helper\Data $backendHelper
-     * @param \Magento\Catalog\Model\ProductFactory $productFactory
-     * @param \Magento\Framework\Registry $coreRegistry
+     * @var CampaignRepository
+     */
+    protected $_campaignRepository;
+
+    /**
+     * @param Context $context
+     * @param Data $backendHelper
+     * @param ProductFactory $productFactory
+     * @param Registry $coreRegistry
      * @param array $data
      * @param Visibility|null $visibility
      * @param Status|null $status
      */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Backend\Helper\Data $backendHelper,
-        \Magento\Catalog\Model\ProductFactory $productFactory,
-        \Magento\Framework\Registry $coreRegistry,
+        Context $context,
+        Data $backendHelper,
+        ProductFactory $productFactory,
+        Registry $coreRegistry,
+        CampaignRepository $campaignRepository,
         array $data = [],
         Visibility $visibility = null,
         Status $status = null
@@ -55,6 +69,7 @@ class Product extends \Magento\Backend\Block\Widget\Grid\Extended
         $this->_coreRegistry = $coreRegistry;
         $this->visibility = $visibility ?: ObjectManager::getInstance()->get(Visibility::class);
         $this->status = $status ?: ObjectManager::getInstance()->get(Status::class);
+        $this->_campaignRepository = $campaignRepository;
         parent::__construct($context, $backendHelper, $data);
     }
 
@@ -70,11 +85,14 @@ class Product extends \Magento\Backend\Block\Widget\Grid\Extended
     }
 
     /**
-     * @return array|null
+     * @throws LocalizedException
      */
     public function getCampaign()
     {
-        // TODO: Implement getCampaign() method.
+        if ($this->getRequest()->getParam('campaign_id', false)) {
+            $campaignId = $this->getRequest()->getParam('campaign_id', false);
+            return $this->_campaignRepository->get($campaignId);
+        }
         return $this->_coreRegistry->registry('tiagosampaio_campaign');
     }
 
@@ -108,7 +126,10 @@ class Product extends \Magento\Backend\Block\Widget\Grid\Extended
     {
         if ($this->getCampaign()->getId()) {
             $this->setDefaultFilter(['in_campaign' => 1]);
+        } else {
+            $this->setDefaultFilter(['in_campaign' => 0]);
         }
+
         $collection = $this->_productFactory->create()->getCollection()->addAttributeToSelect(
             'name'
         )->addAttributeToSelect(
@@ -119,25 +140,9 @@ class Product extends \Magento\Backend\Block\Widget\Grid\Extended
             'status'
         )->addAttributeToSelect(
             'price'
-        )->joinField(
-            'position',
-            'catalog_category_product',
-            'position',
-            'product_id=entity_id',
-            'category_id=' . (int)$this->getRequest()->getParam('id', 0),
-            'left'
         );
-        $storeId = (int)$this->getRequest()->getParam('store', 0);
-        if ($storeId > 0) {
-            $collection->addStoreFilter($storeId);
-        }
-        $this->setCollection($collection);
 
-        $productIds = $this->_getSelectedProducts();
-        if (empty($productIds)) {
-            $productIds = 0;
-        }
-        $this->getCollection()->addFieldToFilter('entity_id', ['in' => $productIds]);
+        $this->setCollection($collection);
 
         return parent::_prepareCollection();
     }
@@ -151,7 +156,7 @@ class Product extends \Magento\Backend\Block\Widget\Grid\Extended
             'in_campaign',
             [
                 'type' => 'checkbox',
-                'name' => 'in_category',
+                'name' => 'in_campaign',
                 'values' => $this->_getSelectedProducts(),
                 'index' => 'entity_id',
                 'header_css_class' => 'col-select col-massaction',
@@ -198,8 +203,8 @@ class Product extends \Magento\Backend\Block\Widget\Grid\Extended
                 'header' => __('Price'),
                 'type' => 'currency',
                 'currency_code' => (string)$this->_scopeConfig->getValue(
-                    \Magento\Directory\Model\Currency::XML_PATH_CURRENCY_BASE,
-                    \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+                    Currency::XML_PATH_CURRENCY_BASE,
+                    ScopeInterface::SCOPE_STORE
                 ),
                 'index' => 'price'
             ]
@@ -213,7 +218,7 @@ class Product extends \Magento\Backend\Block\Widget\Grid\Extended
      */
     public function getGridUrl()
     {
-        return $this->getUrl('catalog/*/grid', ['_current' => true]);
+        return $this->getUrl('tiagosampaio/*/grid', ['_current' => true]);
     }
 
     /**
@@ -222,11 +227,10 @@ class Product extends \Magento\Backend\Block\Widget\Grid\Extended
     protected function _getSelectedProducts()
     {
         $products = $this->getRequest()->getPost('selected_products');
-        // TODO: Implement _getSelectedProducts() method.
-        /*if ($products === null) {
-            $products = $this->getCampaign()->getProductsPosition();
-            return array_keys($products);
-        }*/
+        if ($products === null) {
+            $products = [1,2,3,4,5,9];
+            return $products;
+        }
         return $products;
     }
 }

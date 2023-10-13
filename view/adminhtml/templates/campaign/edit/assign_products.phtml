@@ -1,0 +1,23 @@
+<?php
+
+/** @var \TiagoSampaio\Campaigns\Block\Adminhtml\Campaign\AssignProducts $block */
+/** @var \TiagoSampaio\Campaigns\Block\Adminhtml\Campaign\Tab\Product $blockGrid */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+
+$blockGrid = $block->getBlockGrid();
+$gridJsObjectName = $blockGrid->getJsObjectName();
+?>
+<?= $block->getGridHtml() ?>
+<input type="hidden" name="campaign_products" id="in_campaign_products" data-form-part="tiagosampaio_campaign_form" value="" />
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "TiagoSampaio_Campaigns/js/campaign/assign-products": {
+                "selectedProducts": <?= /* @noEscape */ $block->getProductsJson() ?>,
+                "gridJsObjectName": <?= /* @noEscape */ '"' . $gridJsObjectName . '"' ?: '{}' ?>
+            }
+        }
+    }
+</script>
+<!-- @todo remove when "UI components" will support such initialization -->
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], "require('mage/apply/main').apply();", false) ?>

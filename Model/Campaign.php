@@ -20,6 +20,22 @@ class Campaign extends AbstractModel implements CampaignInterface
     /**
      * @inheritDoc
      */
+    public function getId()
+    {
+        return $this->getData(self::CAMPAIGN_ID);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setId($campaignId)
+    {
+        return $this->setData(self::CAMPAIGN_ID, $campaignId);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getCampaignId()
     {
         return $this->getData(self::CAMPAIGN_ID);

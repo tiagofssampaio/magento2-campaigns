@@ -16,6 +16,19 @@ interface CampaignInterface
      * Get campaign_id
      * @return string|null
      */
+    public function getId();
+
+    /**
+     * Set campaign_id
+     * @param string $campaignId
+     * @return \TiagoSampaio\Campaigns\Campaign\Api\Data\CampaignInterface
+     */
+    public function setId($campaignId);
+
+    /**
+     * Get campaign_id
+     * @return string|null
+     */
     public function getCampaignId();
 
     /**

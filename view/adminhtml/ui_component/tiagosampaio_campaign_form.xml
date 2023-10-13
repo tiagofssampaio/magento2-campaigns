@@ -115,7 +115,7 @@
         </settings>
         <container name="assign_products_container" sortOrder="160">
             <htmlContent name="html_content">
-                <block name="gallery" class="TiagoSampaio\Campaigns\Block\Adminhtml\Campaign\AssignProducts"/>
+                <block name="campaign.products" class="TiagoSampaio\Campaigns\Block\Adminhtml\Campaign\AssignProducts"/>
             </htmlContent>
         </container>
     </fieldset>

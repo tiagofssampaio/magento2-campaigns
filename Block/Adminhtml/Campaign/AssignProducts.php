@@ -9,7 +9,7 @@ class AssignProducts extends \Magento\Backend\Block\Template
      *
      * @var string
      */
-    protected $_template = 'Magento_Catalog::catalog/category/edit/assign_products.phtml';
+    protected $_template = 'TiagoSampaio_Campaigns::campaign/edit/assign_products.phtml';
 
     /**
      * @var \Magento\Catalog\Block\Adminhtml\Category\Tab\Product

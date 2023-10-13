@@ -31,7 +31,7 @@ abstract class Campaign extends \Magento\Backend\App\Action
     {
         $resultPage->setActiveMenu(self::ADMIN_RESOURCE)
             ->addBreadcrumb(__('TiagoSampaio'), __('TiagoSampaio'))
-            ->addBreadcrumb(__('Campaign'), __('Campaign'));
+            ->addBreadcrumb(__('Campaigns'), __('Campaigns'));
         return $resultPage;
     }
 }
