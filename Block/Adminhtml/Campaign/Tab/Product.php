@@ -15,6 +15,7 @@ use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
 use Magento\Store\Model\ScopeInterface;
+use TiagoSampaio\Campaigns\Model\Campaign;
 use TiagoSampaio\Campaigns\Model\CampaignRepository;
 
 class Product extends Extended
@@ -85,9 +86,10 @@ class Product extends Extended
     }
 
     /**
+     * @returm Campaign
      * @throws LocalizedException
      */
-    public function getCampaign()
+    public function getCampaign(): Campaign
     {
         if ($this->getRequest()->getParam('campaign_id', false)) {
             $campaignId = $this->getRequest()->getParam('campaign_id', false);
@@ -230,7 +232,7 @@ class Product extends Extended
         if ($products === null) {
             // TODO: get products from campaign
             $products = [1,2,3,4,5,9];
-            return $products;
+            return $this->getCampaign()->getProducts();
         }
         return $products;
     }

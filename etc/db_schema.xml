@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
 	<table name="tiagosampaio_campaign" resource="default" engine="innodb" comment="Campaigns Table">
-		<column xsi:type="int" name="campaign_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<column xsi:type="int" name="campaign_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Campaign Id"/>
 		<constraint xsi:type="primary" referenceId="PRIMARY">
 			<column name="campaign_id"/>
 		</constraint>
@@ -10,14 +10,14 @@
 		<column name="description" nullable="true" xsi:type="text" comment="Campaign Description"/>
 		<column name="url_key" nullable="false" xsi:type="text" comment="Campaign URL Key"/>
 	</table>
-	<table name="tiagosampaio_campaign_item" resource="default" engine="innodb" comment="Campaign Campaign Table">
-		<column xsi:type="int" name="item_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
-		<constraint xsi:type="primary" referenceId="PRIMARY">
-			<column name="item_id"/>
-		</constraint>
+	<table name="tiagosampaio_campaign_product" resource="default" engine="innodb" comment="Campaign Product Table">
+        <column xsi:type="int" name="campaign_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Campaign Id"/>
         <column xsi:type="int" name="product_id" unsigned="true" nullable="false" identity="false" comment="Product ID"/>
-        <constraint xsi:type="foreign" referenceId="TIAGOSAMPAIO_CAMPAIGN_ITEM_PRODUCT_ID_CATALOG_PRODUCT_ENTITY_ENTITY_ID"
-                    table="tiagosampaio_campaign_item" column="product_id"
+        <constraint xsi:type="foreign" referenceId="TS_CAMPAIGN_PRODUCT_CAMPAIGN_ID_TS_CAMPAIGN_CAMPAIGN_ID"
+                    table="tiagosampaio_campaign_product" column="campaign_id"
+                    referenceTable="tiagosampaio_campaign" referenceColumn="campaign_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="TS_CAMPAIGN_PRODUCT_PRODUCT_ID_CATALOG_PRODUCT_ENTITY_ENTITY_ID"
+                    table="tiagosampaio_campaign_product" column="product_id"
                     referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
 	</table>
 </schema>

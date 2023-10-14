@@ -10,15 +10,19 @@ class Save extends \Magento\Backend\App\Action
 
     protected $dataPersistor;
 
+    protected $campaignModel;
+
     /**
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor
+        \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor,
+        \TiagoSampaio\Campaigns\Model\Campaign $campaignModel
     ) {
         $this->dataPersistor = $dataPersistor;
+        $this->campaignModel = $campaignModel;
         parent::__construct($context);
     }
 
@@ -35,17 +39,21 @@ class Save extends \Magento\Backend\App\Action
         if ($data) {
             $id = $this->getRequest()->getParam('campaign_id');
 
-            $model = $this->_objectManager->create(\TiagoSampaio\Campaigns\Model\Campaign::class)->load($id);
+            $model = $this->campaignModel->load($id);
             if (!$model->getId() && $id) {
                 $this->messageManager->addErrorMessage(__('This Campaign no longer exists.'));
                 return $resultRedirect->setPath('*/*/');
             }
 
             $campaignProducts = explode(',', $data['campaign_products']);
-
-            var_dump($campaignProducts);die;
+            unset($data['campaign_products']);
 
             $model->setData($data);
+
+            if (!empty($campaignProducts) && is_array($campaignProducts)) {
+                // var_dump($campaignProducts);die;
+                $model->setPostedProducts($campaignProducts);
+            }
 
             try {
                 $model->save();

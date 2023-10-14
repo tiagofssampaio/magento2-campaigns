@@ -6,6 +6,17 @@ namespace TiagoSampaio\Campaigns\Model;
 use Magento\Framework\Model\AbstractModel;
 use TiagoSampaio\Campaigns\Api\Data\CampaignInterface;
 
+/**
+ * Campaign model
+ *
+ * @api
+ * @method array setPostedProducts() Set products ids to add to campaign
+ * @method array getPostedProducts() Get products ids to add to campaign
+ * @method array getChangedProductIds() Get products ids that inserted or deleted for campaign
+ * @method bool setIsChangedProductList(bool $changed) Set flag if campaign product list was changed
+ * @method bool getIsChangedProductList() Get flag if campaign product list was changed
+ *
+ */
 class Campaign extends AbstractModel implements CampaignInterface
 {
 
@@ -14,7 +25,7 @@ class Campaign extends AbstractModel implements CampaignInterface
      */
     public function _construct()
     {
-        $this->_init(\TiagoSampaio\Campaigns\Model\ResourceModel\Campaign::class);
+        $this->_init(ResourceModel\Campaign::class);
     }
 
     /**
@@ -109,9 +120,34 @@ class Campaign extends AbstractModel implements CampaignInterface
     /**
      * @inheritDoc
      */
-    public function setUrlKey($urlKey)
+    public function setUrlKey($urlKey): CampaignInterface
     {
         return $this->setData(self::URL_KEY, $urlKey);
     }
+
+    /**
+     * Retrieve array of product id's for campagin
+     *
+     * The array returned has the following format:
+     * array($productId)
+     *
+     * @return array
+     */
+    public function getProducts(): array
+    {
+        if (!$this->getId()) {
+            return [];
+        }
+
+        $array = $this->getData('products');
+        if ($array === null) {
+            $array = $this->getResource()->getProducts($this);
+            $this->setData('products', $array);
+        } else {
+            $array = [];
+        }
+        return $array;
+    }
+
 }
 

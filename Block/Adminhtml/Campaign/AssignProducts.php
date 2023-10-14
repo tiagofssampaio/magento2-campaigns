@@ -2,7 +2,16 @@
 
 namespace TiagoSampaio\Campaigns\Block\Adminhtml\Campaign;
 
-class AssignProducts extends \Magento\Backend\Block\Template
+use Magento\Backend\Block\Template;
+use Magento\Backend\Block\Template\Context;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Json\EncoderInterface;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Element\BlockInterface;
+use TiagoSampaio\Campaigns\Block\Adminhtml\Campaign\Tab\Product;
+use TiagoSampaio\Campaigns\Model\Campaign;
+
+class AssignProducts extends Template
 {
     /**
      * Block template
@@ -17,27 +26,27 @@ class AssignProducts extends \Magento\Backend\Block\Template
     protected $blockGrid;
 
     /**
-     * @var \Magento\Framework\Registry
+     * @var Registry
      */
     protected $registry;
 
     /**
-     * @var \Magento\Framework\Json\EncoderInterface
+     * @var EncoderInterface
      */
     protected $jsonEncoder;
 
     /**
      * AssignProducts constructor.
      *
-     * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Framework\Json\EncoderInterface $jsonEncoder
+     * @param Context $context
+     * @param Registry $registry
+     * @param EncoderInterface $jsonEncoder
      * @param array $data
      */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\Json\EncoderInterface $jsonEncoder,
+        Context $context,
+        Registry $registry,
+        EncoderInterface $jsonEncoder,
         array $data = []
     ) {
         $this->registry = $registry;
@@ -48,14 +57,14 @@ class AssignProducts extends \Magento\Backend\Block\Template
     /**
      * Retrieve instance of grid block
      *
-     * @return \Magento\Framework\View\Element\BlockInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @return BlockInterface
+     * @throws LocalizedException
      */
     public function getBlockGrid()
     {
         if (null === $this->blockGrid) {
             $this->blockGrid = $this->getLayout()->createBlock(
-                \TiagoSampaio\Campaigns\Block\Adminhtml\Campaign\Tab\Product::class,
+                Product::class,
                 'campaign.product.grid'
             );
         }
@@ -66,8 +75,9 @@ class AssignProducts extends \Magento\Backend\Block\Template
      * Return HTML of grid block
      *
      * @return string
+     * @throws LocalizedException
      */
-    public function getGridHtml()
+    public function getGridHtml(): string
     {
         return $this->getBlockGrid()->toHtml();
     }
@@ -75,20 +85,17 @@ class AssignProducts extends \Magento\Backend\Block\Template
     /**
      * @return string
      */
-    public function getProducts()
+    public function getProducts(): string
     {
-        // TODO: get products from campaign
-        $products = [1, 2, 3, 4, 5, 9];
-        // This hack is needed because the array I need only has the product IDs arrays are weird in JavaScript
-        return implode(',', $products);
+        return implode(',', $this->getCampaign()->getProducts());
     }
 
     /**
      * Retrieve current campaign instance
      *
-     * @return array|null
+     * @return Campaign|null
      */
-    public function getCampaign()
+    public function getCampaign(): Campaign|null
     {
         return $this->registry->registry('tiagosampaio_campaign');
     }

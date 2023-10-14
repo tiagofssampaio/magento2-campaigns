@@ -16,7 +16,4 @@
 			</argument>
 		</arguments>
 	</type>
-	<preference for="TiagoSampaio\Campaigns\Api\CampaignItemRepositoryInterface" type="TiagoSampaio\Campaigns\Model\CampaignItemRepository"/>
-	<preference for="TiagoSampaio\Campaigns\Api\Data\CampaignItemInterface" type="TiagoSampaio\Campaigns\Model\CampaignItem"/>
-	<preference for="TiagoSampaio\Campaigns\Api\Data\CampaignItemSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
 </config>
