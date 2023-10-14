@@ -53,11 +53,12 @@ class Save extends Action
             }
 
             $campaignProducts = explode(',', $data['campaign_products']);
+            $campaignProducts = array_filter($campaignProducts);
             unset($data['campaign_products']);
 
             $model->setData($data);
 
-            if (!empty($campaignProducts) && is_array($campaignProducts)) {
+            if (is_array($campaignProducts)) {
                 $model->setPostedProducts($campaignProducts);
             }
 
