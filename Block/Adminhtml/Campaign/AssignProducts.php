@@ -21,7 +21,7 @@ class AssignProducts extends Template
     protected $_template = 'TiagoSampaio_Campaigns::campaign/edit/assign_products.phtml';
 
     /**
-     * @var \Magento\Catalog\Block\Adminhtml\Category\Tab\Product
+     * @var Product
      */
     protected $blockGrid;
 
