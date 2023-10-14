@@ -79,7 +79,7 @@
 				<label translate="true">Title</label>
 				<dataScope>title</dataScope>
 				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
+					<rule name="required-entry" xsi:type="boolean">true</rule>
 				</validation>
 			</settings>
 		</field>
@@ -107,6 +107,21 @@
 				</validation>
 			</settings>
 		</field>
+        <field name="url_key" formElement="input" sortOrder="40">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">Campaign</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">URL Key</label>
+                <dataScope>url_key</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+            </settings>
+        </field>
 	</fieldset>
     <fieldset name="assign_products" sortOrder="40">
         <settings>

@@ -128,11 +128,6 @@ class View extends AbstractProduct implements IdentityInterface
         return $this->getCurrentCampaign()->getProductCollection();
     }
 
-    /**
-     * Return identifiers for produced content
-     *
-     * @return array
-     */
     public function getIdentities()
     {
         return $this->getCurrentCampaign()->getIdentities();
