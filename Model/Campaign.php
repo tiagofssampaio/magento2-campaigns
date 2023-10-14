@@ -10,7 +10,7 @@ use TiagoSampaio\Campaigns\Api\Data\CampaignInterface;
  * Campaign model
  *
  * @api
- * @method array setPostedProducts() Set products ids to add to campaign
+ * @method array setPostedProducts(array $campaignProducts) Set products ids to add to campaign
  * @method array getPostedProducts() Get products ids to add to campaign
  * @method array getChangedProductIds() Get products ids that inserted or deleted for campaign
  * @method bool setIsChangedProductList(bool $changed) Set flag if campaign product list was changed
@@ -40,22 +40,6 @@ class Campaign extends AbstractModel implements CampaignInterface
      * @inheritDoc
      */
     public function setId($campaignId)
-    {
-        return $this->setData(self::CAMPAIGN_ID, $campaignId);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCampaignId()
-    {
-        return $this->getData(self::CAMPAIGN_ID);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setCampaignId($campaignId)
     {
         return $this->setData(self::CAMPAIGN_ID, $campaignId);
     }

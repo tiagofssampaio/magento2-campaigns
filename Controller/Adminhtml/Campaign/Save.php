@@ -3,9 +3,16 @@ declare(strict_types=1);
 
 namespace TiagoSampaio\Campaigns\Controller\Adminhtml\Campaign;
 
+use Exception;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Redirect;
+use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
+use TiagoSampaio\Campaigns\Model\Campaign;
 
-class Save extends \Magento\Backend\App\Action
+class Save extends Action
 {
 
     protected $dataPersistor;
@@ -13,13 +20,13 @@ class Save extends \Magento\Backend\App\Action
     protected $campaignModel;
 
     /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor
+     * @param Context $context
+     * @param DataPersistorInterface $dataPersistor
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor,
-        \TiagoSampaio\Campaigns\Model\Campaign $campaignModel
+        Context $context,
+        DataPersistorInterface $dataPersistor,
+        Campaign $campaignModel
     ) {
         $this->dataPersistor = $dataPersistor;
         $this->campaignModel = $campaignModel;
@@ -29,11 +36,11 @@ class Save extends \Magento\Backend\App\Action
     /**
      * Save action
      *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return ResultInterface
      */
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+        /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
         if ($data) {
@@ -51,7 +58,6 @@ class Save extends \Magento\Backend\App\Action
             $model->setData($data);
 
             if (!empty($campaignProducts) && is_array($campaignProducts)) {
-                // var_dump($campaignProducts);die;
                 $model->setPostedProducts($campaignProducts);
             }
 
@@ -66,7 +72,7 @@ class Save extends \Magento\Backend\App\Action
                 return $resultRedirect->setPath('*/*/');
             } catch (LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the Campaign.'));
             }
 

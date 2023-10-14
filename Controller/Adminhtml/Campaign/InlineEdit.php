@@ -3,18 +3,26 @@ declare(strict_types=1);
 
 namespace TiagoSampaio\Campaigns\Controller\Adminhtml\Campaign;
 
-class InlineEdit extends \Magento\Backend\App\Action
+use Exception;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\Result\Json;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\Controller\ResultInterface;
+use TiagoSampaio\Campaigns\Model\Campaign;
+
+class InlineEdit extends Action
 {
 
     protected $jsonFactory;
 
     /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
+     * @param Context $context
+     * @param JsonFactory $jsonFactory
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
+        Context $context,
+        JsonFactory $jsonFactory
     ) {
         parent::__construct($context);
         $this->jsonFactory = $jsonFactory;
@@ -23,15 +31,15 @@ class InlineEdit extends \Magento\Backend\App\Action
     /**
      * Inline edit action
      *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return ResultInterface
      */
     public function execute()
     {
-        /** @var \Magento\Framework\Controller\Result\Json $resultJson */
+        /** @var Json $resultJson */
         $resultJson = $this->jsonFactory->create();
         $error = false;
         $messages = [];
-        
+
         if ($this->getRequest()->getParam('isAjax')) {
             $postItems = $this->getRequest()->getParam('items', []);
             if (!count($postItems)) {
@@ -39,19 +47,19 @@ class InlineEdit extends \Magento\Backend\App\Action
                 $error = true;
             } else {
                 foreach (array_keys($postItems) as $modelid) {
-                    /** @var \TiagoSampaio\Campaigns\Model\Campaign $model */
-                    $model = $this->_objectManager->create(\TiagoSampaio\Campaigns\Model\Campaign::class)->load($modelid);
+                    /** @var Campaign $model */
+                    $model = $this->_objectManager->create(Campaign::class)->load($modelid);
                     try {
                         $model->setData(array_merge($model->getData(), $postItems[$modelid]));
                         $model->save();
-                    } catch (\Exception $e) {
+                    } catch (Exception $e) {
                         $messages[] = "[Campaign ID: {$modelid}]  {$e->getMessage()}";
                         $error = true;
                     }
                 }
             }
         }
-        
+
         return $resultJson->setData([
             'messages' => $messages,
             'error' => $error

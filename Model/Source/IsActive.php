@@ -18,7 +18,11 @@ class IsActive implements OptionSourceInterface
      */
     public function toOptionArray()
     {
-        $availableOptions = [self::IS_ACTIVE => __('Yes'), self::NOT_ATIVE => __('No')];
+        $availableOptions = [
+            self::IS_ACTIVE => __('Yes'),
+            self::NOT_ATIVE => __('No')
+        ];
+
         $options = [];
         foreach ($availableOptions as $key => $value) {
             $options[] = [

@@ -100,17 +100,17 @@ class CampaignRepository implements CampaignRepositoryInterface
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
         $collection = $this->campaignCollectionFactory->create();
-        
+
         $this->collectionProcessor->process($criteria, $collection);
-        
+
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
-        
+
         $items = [];
         foreach ($collection as $model) {
             $items[] = $model;
         }
-        
+
         $searchResults->setItems($items);
         $searchResults->setTotalCount($collection->getSize());
         return $searchResults;
@@ -123,7 +123,7 @@ class CampaignRepository implements CampaignRepositoryInterface
     {
         try {
             $campaignModel = $this->campaignFactory->create();
-            $this->resource->load($campaignModel, $campaign->getCampaignId());
+            $this->resource->load($campaignModel, $campaign->getId());
             $this->resource->delete($campaignModel);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__(

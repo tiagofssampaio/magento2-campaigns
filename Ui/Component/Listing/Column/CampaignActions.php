@@ -3,25 +3,34 @@ declare(strict_types=1);
 
 namespace TiagoSampaio\Campaigns\Ui\Component\Listing\Column;
 
-class CampaignActions extends \Magento\Ui\Component\Listing\Columns\Column
+use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Element\UiComponent\ContextInterface;
+use Magento\Framework\View\Element\UiComponentFactory;
+use Magento\Ui\Component\Listing\Columns\Column;
+
+class CampaignActions extends Column
 {
 
     const URL_PATH_DELETE = 'tiagosampaio/campaign/delete';
     const URL_PATH_EDIT = 'tiagosampaio/campaign/edit';
     const URL_PATH_DETAILS = 'tiagosampaio/campaign/details';
-    protected $urlBuilder;
 
     /**
-     * @param \Magento\Framework\View\Element\UiComponent\ContextInterface $context
-     * @param \Magento\Framework\View\Element\UiComponentFactory $uiComponentFactory
-     * @param \Magento\Framework\UrlInterface $urlBuilder
+     * @var UrlInterface
+     */
+    protected UrlInterface $urlBuilder;
+
+    /**
+     * @param ContextInterface $context
+     * @param UiComponentFactory $uiComponentFactory
+     * @param UrlInterface $urlBuilder
      * @param array $components
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\View\Element\UiComponent\ContextInterface $context,
-        \Magento\Framework\View\Element\UiComponentFactory $uiComponentFactory,
-        \Magento\Framework\UrlInterface $urlBuilder,
+        ContextInterface $context,
+        UiComponentFactory $uiComponentFactory,
+        UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
     ) {
@@ -59,8 +68,8 @@ class CampaignActions extends \Magento\Ui\Component\Listing\Columns\Column
                             ),
                             'label' => __('Delete'),
                             'confirm' => [
-                                'title' => __('Delete "${ $.$data.title }"'),
-                                'message' => __('Are you sure you wan\'t to delete a "${ $.$data.title }" record?')
+                                'title' => __('Delete "%1"', $item['title']),
+                                'message' => __('Are you sure you wan\'t to delete a "%1" record?', $item['title'])
                             ]
                         ]
                     ];

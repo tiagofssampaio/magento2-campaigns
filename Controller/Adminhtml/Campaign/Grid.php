@@ -2,20 +2,23 @@
 
 namespace TiagoSampaio\Campaigns\Controller\Adminhtml\Campaign;
 
+use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\Result\Raw;
 use Magento\Framework\Controller\Result\RawFactory;
 use Magento\Framework\View\LayoutFactory;
+use TiagoSampaio\Campaigns\Block\Adminhtml\Campaign\Tab\Product;
 
-class Grid extends \Magento\Backend\App\Action
+class Grid extends Action
 {
 
     /**
-     * @var \Magento\Framework\Controller\Result\RawFactory
+     * @var RawFactory
      */
     protected $resultRawFactory;
 
     /**
-     * @var \Magento\Framework\View\LayoutFactory
+     * @var LayoutFactory
      */
     protected $layoutFactory;
 
@@ -35,14 +38,14 @@ class Grid extends \Magento\Backend\App\Action
     }
 
     /**
-     * @return \Magento\Framework\Controller\Result\Raw
+     * @return Raw
      */
     public function execute()
     {
         $resultRaw = $this->resultRawFactory->create();
         return $resultRaw->setContents(
             $this->layoutFactory->create()->createBlock(
-                \TiagoSampaio\Campaigns\Block\Adminhtml\Campaign\Tab\Product::class,
+                Product::class,
                 'campaign.product.grid'
             )->toHtml()
         );

@@ -103,13 +103,7 @@ class Campaign extends AbstractDb
          */
         $insert = array_diff($products, $oldProducts);
         $delete = array_diff($oldProducts, $products);
-/*
-        echo '<pre>';
-        echo 'products: ';var_export($products);echo '<br>';
-        echo 'insert: ';var_export($insert);echo '<br>';
-        echo 'delete: ';var_export($delete);echo '<br>';
-        die;
-*/
+
         $connection = $this->getConnection();
 
         /**

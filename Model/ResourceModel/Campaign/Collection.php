@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace TiagoSampaio\Campaigns\Model\ResourceModel\Campaign;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+use TiagoSampaio\Campaigns\Model\ResourceModel\Campaign;
 
 class Collection extends AbstractCollection
 {
@@ -20,7 +21,7 @@ class Collection extends AbstractCollection
     {
         $this->_init(
             \TiagoSampaio\Campaigns\Model\Campaign::class,
-            \TiagoSampaio\Campaigns\Model\ResourceModel\Campaign::class
+            Campaign::class
         );
     }
 }
