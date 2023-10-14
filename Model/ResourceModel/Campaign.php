@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace TiagoSampaio\Campaigns\Model\ResourceModel;
 
+use Magento\Catalog\Model\Product\Visibility;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
+use Magento\Framework\App\CacheInterface;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
@@ -19,16 +22,42 @@ class Campaign extends AbstractDb
     protected ManagerInterface $_eventManager;
 
     /**
+     * Application Cache Manager
+     *
+     * @var CacheInterface
+     */
+    protected CacheInterface $_cacheManager;
+
+    /**
+     * @var CollectionFactory
+     */
+    protected CollectionFactory $_productCollectionFactory;
+
+    /**
+     * @var Visibility
+     */
+    protected Visibility $_productVisibility;
+
+    /**
      * @param Context $context
      * @param ManagerInterface $eventManager
+     * @param CacheInterface $cacheManager
+     * @param CollectionFactory $productCollectionFactory
+     * @param Visibility $productVisibility
      * @param null $connectionName
      */
     public function __construct(
-        Context $context,
+        Context          $context,
         ManagerInterface $eventManager,
+        CacheInterface $cacheManager,
+        CollectionFactory $productCollectionFactory,
+        Visibility $productVisibility,
         $connectionName = null
     ) {
         $this->_eventManager = $eventManager;
+        $this->_cacheManager = $cacheManager;
+        $this->_productCollectionFactory = $productCollectionFactory;
+        $this->_productVisibility = $productVisibility;
         parent::__construct($context, $connectionName);
     }
 
@@ -58,6 +87,31 @@ class Campaign extends AbstractDb
         return $this->getConnection()->fetchCol($select);
     }
 
+    public function getProductCollection(\TiagoSampaio\Campaigns\Model\Campaign $campaign)
+    {
+        $productIds = $campaign->getProducts();
+
+        $productCollection = $this->_productCollectionFactory->create()
+            ->addAttributeToSelect(
+                'name'
+            )->addAttributeToSelect(
+                'sku'
+            )->addAttributeToSelect(
+                'small_image'
+            )->addAttributeToSelect(
+                'visibility'
+            )->addAttributeToSelect(
+                'status'
+            )->addAttributeToSelect(
+                'price'
+            )
+            ->addAttributeToFilter('entity_id', ['in' => $productIds])
+            ->addAttributeToFilter('status', 1)
+            ->setVisibility($this->_productVisibility->getVisibleInSiteIds());
+
+        return $productCollection;
+    }
+
     /**
      * Process campaign data after save campaign
      *
@@ -68,6 +122,8 @@ class Campaign extends AbstractDb
     protected function _afterSave(AbstractModel $object): Campaign
     {
         $this->_saveCampaignProducts($object);
+        $this->_eventManager->dispatch('clean_cache_by_tags', ['object' => $object]);
+        $this->_cacheManager->clean($object->getIdentities());
         return parent::_afterSave($object);
     }
 

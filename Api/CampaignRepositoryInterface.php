@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace TiagoSampaio\Campaigns\Api;
 
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 interface CampaignRepositoryInterface
 {
@@ -22,7 +23,7 @@ interface CampaignRepositoryInterface
      * Retrieve Campaign
      * @param string $campaignId
      * @return \TiagoSampaio\Campaigns\Api\Data\CampaignInterface
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws NoSuchEntityException
      */
     public function get($campaignId);
 

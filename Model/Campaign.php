@@ -20,6 +20,8 @@ use TiagoSampaio\Campaigns\Api\Data\CampaignInterface;
 class Campaign extends AbstractModel implements CampaignInterface
 {
 
+    const CACHE_TAG = 'campaign';
+
     /**
      * @inheritDoc
      */
@@ -131,6 +133,28 @@ class Campaign extends AbstractModel implements CampaignInterface
             $array = [];
         }
         return $array;
+    }
+
+    public function getProductCollection()
+    {
+        $collection = $this->getData('product_collection');
+        if ($collection === null) {
+            $collection = $this->getResource()->getProductCollection($this);
+            $this->setData('product_collection', $collection);
+        }
+        return $collection;
+    }
+
+    public function getIdentities(): array
+    {
+        /**
+         * TODO
+         *
+         * Clear cache for campaign on save
+         */
+        return [
+            self::CACHE_TAG . '_' . $this->getId(),
+        ];
     }
 
 }
