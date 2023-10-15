@@ -2,12 +2,12 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-                <block class="TiagoSampaio\Campaigns\Block\Campaign\View"
+                <block class="TiagoSampaio\Campaigns\Block\Index\View"
                        name="campaign.description.content"
                        template="TiagoSampaio_Campaigns::campaign/description.phtml"
                        cacheable="false"
                 />
-                <block class="TiagoSampaio\Campaigns\Block\Campaign\View"
+                <block class="TiagoSampaio\Campaigns\Block\Index\View"
                        name="campaign.products.content"
                        template="TiagoSampaio_Campaigns::campaign/products.phtml"
                        cacheable="false"

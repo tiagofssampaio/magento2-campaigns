@@ -1,6 +1,6 @@
 <?php
 
-namespace TiagoSampaio\Campaigns\Block\Campaign;
+namespace TiagoSampaio\Campaigns\Block\Index;
 
 use Exception;
 use Magento\Catalog\Block\Product\AbstractProduct;
