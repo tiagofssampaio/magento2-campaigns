@@ -2,7 +2,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="product.info.media">
-            <block class="TiagoSampaio\Campaigns\Block\Product\Tags" name="campaign.product.tags" template="TiagoSampaio_Campaigns::product/tags.phtml">
+            <block class="TiagoSampaio\Campaigns\Block\Product\Tags" name="campaign.product.tags">
                 <arguments>
                     <argument name="tagsHelper" xsi:type="object">TiagoSampaio\Campaigns\Helper\Tags</argument>
                 </arguments>

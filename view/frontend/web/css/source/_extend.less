@@ -1,37 +1,65 @@
-.catalog-product-view {
-    .product.media {
+& when (@media-common = true) {
+    .catalog-product-view {
+        .product.media {
+            position: relative;
+        }
+    }
+
+    li.product-item {
         position: relative;
     }
-}
 
-ul {
-    &.campaign-tags {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        position: absolute;
-        top: 0;
-        right: 0;
-        display: flex;
-        flex-direction: column;
+    ul {
+        &.campaign-tags {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
 
-        li {
-            display: inline-block;
-            margin-right: 5px;
-            margin-bottom: 5px;
-            padding: 5px 10px;
-            background-color: #000;
-            color: #fff;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            a {
+            li {
+                display: inline-block;
+                margin-right: 5px;
+                margin-bottom: 5px;
+                padding: 5px 10px;
+                background-color: #000;
                 color: #fff;
-                text-decoration: none;
-                &:hover {
-                    color: grey;
+                font-size: 12px;
+                font-weight: bold;
+                text-transform: uppercase;
+                a.campaign-link {
+                    color: #fff;
                     text-decoration: none;
+                    &:hover {
+                        color: grey;
+                        text-decoration: none;
+                    }
                 }
+            }
+        }
+    }
+
+    .catalog-category-view {
+        ul {
+            &.campaign-tags {
+                li {
+                    a.campaign-link {
+                        font-size: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    /* Hide on campaign view because it doesn't make sense since it's already on the campaign page */
+    .campaign-index-view {
+        ul {
+            &.campaign-tags {
+                display: none;
             }
         }
     }

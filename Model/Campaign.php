@@ -227,13 +227,9 @@ class Campaign extends AbstractModel implements CampaignInterface
 
     public function getIdentities(): array
     {
-        /**
-         * TODO
-         *
-         * Clear cache for campaign on save
-         */
         return [
             self::CACHE_TAG . '_' . $this->getId(),
+            self::CACHE_TAG
         ];
     }
 

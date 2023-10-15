@@ -192,8 +192,6 @@ class Campaign extends AbstractDb
     {
         $this->_saveCampaignProducts($object);
         $this->_generateUrls($object);
-        $this->_eventManager->dispatch('clean_cache_by_tags', ['object' => $object]);
-        $this->_cacheManager->clean($object->getIdentities());
         return parent::_afterSave($object);
     }
 
@@ -267,6 +265,11 @@ class Campaign extends AbstractDb
                 ['campaign' => $campaign, 'product_ids' => $productIds]
             );
             $campaign->setAffectedProductIds($productIds);
+        } else {
+            $this->_eventManager->dispatch(
+                'tiagosampaio_campaign_change_products',
+                ['campaign' => $campaign, 'product_ids' => []]
+            );
         }
         return $this;
     }

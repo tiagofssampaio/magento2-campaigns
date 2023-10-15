@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="tiagosampaio_campaign_change_products">
+        <observer name="tiagosampaio_campaignchangeproducts" instance="TiagoSampaio\Campaigns\Observer\CampaignChangeProducts"/>
+    </event>
+</config>

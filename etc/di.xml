@@ -16,4 +16,7 @@
 			</argument>
 		</arguments>
 	</type>
+    <type name="Magento\Catalog\Block\Product\Image">
+        <plugin name="TiagoSampaio_Campaigns_Plugin_Magento_Catalog_Block_Product_Image" type="TiagoSampaio\Campaigns\Plugin\Magento\Catalog\Block\Product\Image" sortOrder="10" disabled="false"/>
+    </type>
 </config>
