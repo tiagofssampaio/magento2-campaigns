@@ -6,11 +6,14 @@
  - [Installation](#markdown-header-installation)
  - [Configuration](#markdown-header-configuration)
  - [Specifications](#markdown-header-specifications)
- - [Attributes](#markdown-header-attributes)
-
 
 ## Main Functionalities
-TiagoSampaio
+
+1. Campaigns
+   1. Activate and deactivate
+   2. Add campaign title to product page and category page
+   3. Have its own campaign listing page
+   4. Campaigns description can render WYSIWYG or Page builder
 
 ## Installation
 \* = in production please use the `--keep-generated` option
@@ -24,28 +27,13 @@ TiagoSampaio
 
 ### Type 2: Composer
 
- - Make the module available in a composer repository for example:
-    - private repository `repo.magento.com`
-    - public repository `packagist.org`
-    - public github repository as vcs
- - Add the composer repository to the configuration by running `composer config repositories.repo.magento.com composer https://repo.magento.com/`
+ - Add the composer repository to the configuration by running `composer config repositories.magento2-campaigns git "https://github.com/tiagofssampaio/magento2-campaigns.git"`
  - Install the module composer by running `composer require tiagosampaio/module-campaigns`
  - enable the module by running `php bin/magento module:enable TiagoSampaio_Campaigns`
  - apply database updates by running `php bin/magento setup:upgrade`\*
  - Flush the cache by running `php bin/magento cache:flush`
 
-
 ## Configuration
-
-
-
-
-## Specifications
-
-
-
-
-## Attributes
-
+Sidebar menu: TIAGOSAMPAIO > Campaigns
 
 
