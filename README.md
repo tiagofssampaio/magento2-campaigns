@@ -27,7 +27,7 @@
 
 ### Type 2: Composer
 
- - Add the composer repository to the configuration by running `composer config repositories.magento2-campaigns git "https://github.com/tiagofssampaio/magento2-campaigns.git"`
+ - Add the composer repository to the configuration by running `composer config repositories.magento2-campaigns git "https://github.com/tiagofssampaio/magento2-campaigns"`
  - Install the module composer by running `composer require tiagosampaio/module-campaigns`
  - enable the module by running `php bin/magento module:enable TiagoSampaio_Campaigns`
  - apply database updates by running `php bin/magento setup:upgrade`\*
