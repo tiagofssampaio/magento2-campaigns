@@ -109,7 +109,6 @@ class View extends AbstractProduct implements IdentityInterface
             }
 
         }
-
         return $this;
     }
 

@@ -3,7 +3,16 @@ declare(strict_types=1);
 
 namespace TiagoSampaio\Campaigns\Model;
 
+use Magento\CatalogUrlRewrite\Model\CategoryUrlRewriteGenerator;
+use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\Filter\TranslitUrl;
 use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Profiler;
+use Magento\Framework\Registry;
+use Magento\UrlRewrite\Model\UrlFinderInterface;
+use Magento\UrlRewrite\Service\V1\Data\UrlRewrite;
 use TiagoSampaio\Campaigns\Api\Data\CampaignInterface;
 
 /**
@@ -20,7 +29,48 @@ use TiagoSampaio\Campaigns\Api\Data\CampaignInterface;
 class Campaign extends AbstractModel implements CampaignInterface
 {
 
+    const URL_ENTITY_TYPE = 'campaign';
+
     const CACHE_TAG = 'campaign';
+
+    /**
+     * @var TranslitUrl
+     */
+    protected TranslitUrl $translitUrl;
+
+    /**
+     * @var UrlFinderInterface
+     */
+    protected UrlFinderInterface $urlFinder;
+
+    /**
+     * @param Context $context
+     * @param Registry $registry
+     * @param TranslitUrl $translitUrl
+     * @param UrlFinderInterface $urlFinder
+     * @param AbstractResource|null $resource
+     * @param AbstractDb|null $resourceCollection
+     * @param array $data
+     */
+    public function __construct(
+        Context $context,
+        Registry                         $registry,
+        TranslitUrl                      $translitUrl,
+        UrlFinderInterface               $urlFinder,
+        AbstractResource                 $resource = null,
+        AbstractDb                       $resourceCollection = null,
+        array                            $data = []
+    ) {
+        parent::__construct(
+            $context,
+            $registry,
+            $resource,
+            $resourceCollection,
+            $data
+        );
+        $this->translitUrl = $translitUrl;
+        $this->urlFinder = $urlFinder;
+    }
 
     /**
      * @inheritDoc
@@ -108,7 +158,7 @@ class Campaign extends AbstractModel implements CampaignInterface
      */
     public function setUrlKey($urlKey): CampaignInterface
     {
-        return $this->setData(self::URL_KEY, $urlKey);
+        return $this->setData(self::URL_KEY, $this->translitUrl->filter($urlKey));
     }
 
     /**
@@ -143,6 +193,35 @@ class Campaign extends AbstractModel implements CampaignInterface
             $this->setData('product_collection', $collection);
         }
         return $collection;
+    }
+
+    /**
+     * Get category url
+     * @param int $storeId
+     * @return string
+     */
+    public function getUrl(int $storeId = 0)
+    {
+        $url = $this->_getData('url');
+        if ($url === null) {
+            $storeId = $storeId ?: (int)$this->getResource()->getCurrentStoreId();
+            $rewrite = $this->urlFinder->findOneByData(
+                [
+                    UrlRewrite::ENTITY_ID => $this->getId(),
+                    UrlRewrite::ENTITY_TYPE => self::URL_ENTITY_TYPE,
+                    UrlRewrite::STORE_ID => $storeId,
+                ]
+            );
+            if ($rewrite) {
+                $url = $rewrite->getRequestPath();
+            } else {
+                $url = $this->getResource()->getTargetPath($this);
+            }
+
+            $this->setData('url', $url);
+            return $this->getData('url');
+        }
+        return $url;
     }
 
     public function getIdentities(): array

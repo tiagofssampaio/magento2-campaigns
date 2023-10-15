@@ -1,6 +1,6 @@
 <?php
 
-namespace TiagoSampaio\Campaigns\Controller\Campaign;
+namespace TiagoSampaio\Campaigns\Controller\Index;
 
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultInterface;
