@@ -75,14 +75,11 @@ class View extends AbstractProduct implements IdentityInterface
             }
             */
 
-            /*
-             * TODO - Add canonical URL
             $this->pageConfig->addRemotePageAsset(
                 $campaign->getUrl(),
                 'canonical',
                 ['attributes' => ['rel' => 'canonical']]
             );
-            */
 
             $pageMainTitle = $this->getLayout()->getBlock('page.main.title');
             if ($pageMainTitle) {

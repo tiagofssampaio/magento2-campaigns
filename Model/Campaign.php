@@ -200,11 +200,12 @@ class Campaign extends AbstractModel implements CampaignInterface
      * @param int $storeId
      * @return string
      */
-    public function getUrl(int $storeId = 0)
+    public function getUrl()
     {
         $url = $this->_getData('url');
         if ($url === null) {
-            $storeId = $storeId ?: (int)$this->getResource()->getCurrentStoreId();
+            $currentStore = $this->getResource()->getCurrentStore();
+            $storeId = (int)$currentStore->getId();
             $rewrite = $this->urlFinder->findOneByData(
                 [
                     UrlRewrite::ENTITY_ID => $this->getId(),
@@ -218,7 +219,7 @@ class Campaign extends AbstractModel implements CampaignInterface
                 $url = $this->getResource()->getTargetPath($this);
             }
 
-            $this->setData('url', $url);
+            $this->setData('url', $currentStore->getUrl() . ltrim($url, '/'));
             return $this->getData('url');
         }
         return $url;

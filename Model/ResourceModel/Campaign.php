@@ -271,9 +271,9 @@ class Campaign extends AbstractDb
         return $this;
     }
 
-    public function getCurrentStoreId()
+    public function getCurrentStore()
     {
-        return $this->_storeManager->getStore()->getId();
+        return $this->_storeManager->getStore();
     }
 
     protected function _getStoreIds()
