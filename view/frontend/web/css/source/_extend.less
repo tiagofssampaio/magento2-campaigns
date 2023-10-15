@@ -1,0 +1,38 @@
+.catalog-product-view {
+    .product.media {
+        position: relative;
+    }
+}
+
+ul {
+    &.campaign-tags {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+
+        li {
+            display: inline-block;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            padding: 5px 10px;
+            background-color: #000;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            a {
+                color: #fff;
+                text-decoration: none;
+                &:hover {
+                    color: grey;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}

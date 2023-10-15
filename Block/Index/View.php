@@ -113,7 +113,7 @@ class View extends AbstractProduct implements IdentityInterface
     {
         $description = $this->getCurrentCampaign()->getDescription();
         try {
-            return $this->_filterProvider->getPageFilter()->filter($description);
+            return $description ? $this->_filterProvider->getBlockFilter()->filter($description) : $description;
         } catch (Exception) {
             return $description;
         }

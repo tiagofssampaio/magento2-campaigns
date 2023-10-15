@@ -87,7 +87,7 @@ class AssignProducts extends Template
      */
     public function getProducts(): string
     {
-        return implode(',', $this->getCampaign()->getProducts());
+        return $this->getCampaign() ? implode(',', $this->getCampaign()->getProducts()) : '';
     }
 
     /**
@@ -95,7 +95,7 @@ class AssignProducts extends Template
      *
      * @return Campaign|null
      */
-    public function getCampaign(): Campaign|null
+    public function getCampaign(): ?Campaign
     {
         return $this->registry->registry('tiagosampaio_campaign');
     }

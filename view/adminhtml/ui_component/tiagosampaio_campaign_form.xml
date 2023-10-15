@@ -88,7 +88,7 @@
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">Campaign</item>
                     <item name="wysiwygConfigData" xsi:type="array">
-                        <item name="is_pagebuilder_enabled" xsi:type="boolean">false</item>
+                        <item name="is_pagebuilder_enabled" xsi:type="boolean">true</item>
                         <item name="toggle_button" xsi:type="boolean">true</item>
                         <item name="height" xsi:type="string">200px</item>
                         <item name="add_variables" xsi:type="boolean">true</item>

@@ -83,6 +83,9 @@ class View implements ActionInterface
 
         try {
             $campaign = $this->campaignRepository->get($campaignId);
+            if (!$campaign->getIsActive()) {
+                return false;
+            }
         } catch (NoSuchEntityException) {
             return false;
         }

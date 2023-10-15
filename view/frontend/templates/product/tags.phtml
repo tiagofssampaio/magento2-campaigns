@@ -1,0 +1,18 @@
+<?php
+
+/** @var \TiagoSampaio\Campaigns\Block\Product\Tags $block */
+/** @var \TiagoSampaio\Campaigns\Helper\Tags $helper */
+
+$product = $block->getProduct();
+$helper = $block->getData('tagsHelper');
+
+$tags = $helper->getTagsByProductId($product->getId());
+?>
+
+<ul class="campaign-tags">
+    <?php foreach ($tags as $tag): ?>
+        <li>
+           <a href="<?= $tag->getUrl() ?>"><?= $tag->getTitle() ?></a>
+        </li>
+    <?php endforeach; ?>
+</ul>

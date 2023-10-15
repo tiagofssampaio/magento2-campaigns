@@ -86,10 +86,10 @@ class Product extends Extended
     }
 
     /**
-     * @returm Campaign
+     * @returm Campaign|null
      * @throws LocalizedException
      */
-    public function getCampaign(): Campaign
+    public function getCampaign(): ?Campaign
     {
         if ($this->getRequest()->getParam('campaign_id', false)) {
             $campaignId = $this->getRequest()->getParam('campaign_id', false);
@@ -101,6 +101,7 @@ class Product extends Extended
     /**
      * @param Column $column
      * @return $this
+     * @throws LocalizedException
      */
     protected function _addColumnFilterToCollection($column)
     {
@@ -123,10 +124,11 @@ class Product extends Extended
 
     /**
      * @return Grid
+     * @throws LocalizedException
      */
     protected function _prepareCollection()
     {
-        if ($this->getCampaign()->getId()) {
+        if ($this->getCampaign() && $this->getCampaign()->getId()) {
             $this->setDefaultFilter(['in_campaign' => 1]);
         } else {
             $this->setDefaultFilter(['in_campaign' => 0]);
@@ -225,14 +227,13 @@ class Product extends Extended
 
     /**
      * @return array
+     * @throws LocalizedException
      */
     protected function _getSelectedProducts()
     {
         $products = $this->getRequest()->getPost('selected_products');
         if ($products === null) {
-            // TODO: get products from campaign
-            $products = [1,2,3,4,5,9];
-            return $this->getCampaign()->getProducts();
+            return $this->getCampaign() ? $this->getCampaign()->getProducts() : [];
         }
         return $products;
     }

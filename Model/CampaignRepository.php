@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace TiagoSampaio\Campaigns\Model;
 
+use Exception;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -71,7 +73,7 @@ class CampaignRepository implements CampaignRepositoryInterface
     {
         try {
             $this->resource->save($campaign);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new CouldNotSaveException(__(
                 'Could not save the campaign: %1',
                 $exception->getMessage()
@@ -97,14 +99,29 @@ class CampaignRepository implements CampaignRepositoryInterface
      * @inheritDoc
      */
     public function getList(
-        \Magento\Framework\Api\SearchCriteriaInterface $criteria
+        SearchCriteriaInterface $searchCriteria
     ) {
         $collection = $this->campaignCollectionFactory->create();
 
-        $this->collectionProcessor->process($criteria, $collection);
+        /**
+         * Apply custom filter and ignore default filter behavior because "product_id" is not a field from the table
+         */
+        foreach ($searchCriteria->getFilterGroups() as $filterGroup) {
+            $newFilters = [];
+            foreach ($filterGroup->getFilters() as $filter) {
+                if ($filter->getField() === 'product_id') {
+                    $collection->addProductsFilter([ 'in' => $filter->getValue()]);
+                } else {
+                    $newFilters[] = $filter;
+                }
+            }
+            $filterGroup->setFilters($newFilters);
+        }
+
+        $this->collectionProcessor->process($searchCriteria, $collection);
 
         $searchResults = $this->searchResultsFactory->create();
-        $searchResults->setSearchCriteria($criteria);
+        $searchResults->setSearchCriteria($searchCriteria);
 
         $items = [];
         foreach ($collection as $model) {
@@ -125,7 +142,7 @@ class CampaignRepository implements CampaignRepositoryInterface
             $campaignModel = $this->campaignFactory->create();
             $this->resource->load($campaignModel, $campaign->getId());
             $this->resource->delete($campaignModel);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new CouldNotDeleteException(__(
                 'Could not delete the Campaign: %1',
                 $exception->getMessage()
