@@ -1,4 +1,4 @@
-# Mage2 Module TiagoSampaio Campaigns
+# Magento 2 Module TiagoSampaio Campaigns
 
     ``tiagosampaio/module-campaigns``
 
