@@ -6,6 +6,7 @@
  - [Installation](#installation)
  - [Configuration](#configuration)
  - [Possible Improvements and Suggestions](#possible-improvements-and-suggestions)
+ - [Notes](#notes)
 
 ## Main Functionalities
 
@@ -42,3 +43,8 @@
   - Instead of using a product selection, use catalog rules to create a listing (the last suggestion would be super important performance wise)
   - Create an index for the campaign product listing page
   - Add field to style the campaign tag
+  - Improve cache management
+
+## Notes
+
+  - After editing or adding a campaign, make sure you follow the cache invalidation intructions (clear it)
