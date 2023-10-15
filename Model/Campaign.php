@@ -197,7 +197,7 @@ class Campaign extends AbstractModel implements CampaignInterface
 
     /**
      * Get category url
-     * @param int $storeId
+     *
      * @return string
      */
     public function getUrl()
