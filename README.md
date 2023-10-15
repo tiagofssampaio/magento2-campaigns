@@ -2,18 +2,17 @@
 
     ``tiagosampaio/module-campaigns``
 
- - [Main Functionalities](#markdown-header-main-functionalities)
- - [Installation](#markdown-header-installation)
- - [Configuration](#markdown-header-configuration)
- - [Specifications](#markdown-header-specifications)
+ - [Main Functionalities](#main-functionalities)
+ - [Installation](#installation)
+ - [Configuration](#configuration)
+ - [Possible Improvements and Suggestions](#possible-improvements-and-suggestions)
 
 ## Main Functionalities
 
-1. Campaigns
-   1. Activate and deactivate
-   2. Add campaign title to product page and category page
-   3. Have its own campaign listing page
-   4. Campaigns description can render WYSIWYG or Page builder
+  - Activate and deactivate
+  - Add campaign title to product page and category page 
+  - Have its own campaign listing page 
+  - Campaigns description can render with WYSIWYG or Page builder
 
 ## Installation
 \* = in production please use the `--keep-generated` option
@@ -34,6 +33,12 @@
  - Flush the cache by running `php bin/magento cache:flush`
 
 ## Configuration
-Sidebar menu: TIAGOSAMPAIO > Campaigns
 
+  - Sidebar menu: TIAGOSAMPAIO > Campaigns
 
+## Possible Improvements and Suggestions
+
+  - Add multistore compatibility
+  - Instead of using a product selection, use catalog rules to create a listing (the last suggestion would be super important performance wise)
+  - Create an index for the campaign product listing page
+  - Add field to style the campaign tag
